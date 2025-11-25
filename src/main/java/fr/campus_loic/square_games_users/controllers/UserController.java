@@ -1,5 +1,6 @@
 package fr.campus_loic.square_games_users.controllers;
 
+import fr.campus_loic.square_games_users.controllers.dto.UserDto;
 import fr.campus_loic.square_games_users.domain.UserService;
 import fr.campus_loic.square_games_users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,18 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable String id) {
+    public UserDto getUserById(@PathVariable String id) {
         return userService.getUser(id);
     }
 
     @PostMapping
-    public String createUser(@RequestBody String name, String email) {
-        User user = userService.createUser(name, email);
-        return user.getId();
+    public String createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto.name(), userDto.email());
     }
 
     @DeleteMapping("/{id}")
