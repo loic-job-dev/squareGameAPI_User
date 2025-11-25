@@ -1,7 +1,6 @@
 package fr.campus_loic.square_games_users.domain;
 
 import fr.campus_loic.square_games_users.controllers.dto.UserDto;
-import fr.campus_loic.square_games_users.model.User;
 import org.antlr.v4.runtime.misc.NotNull;
 
 

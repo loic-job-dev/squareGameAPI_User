@@ -1,7 +1,6 @@
 package fr.campus_loic.square_games_users.repositories;
 
 import fr.campus_loic.square_games_users.domain.UserDao;
-import fr.campus_loic.square_games_users.domain.UserService;
 import fr.campus_loic.square_games_users.model.User;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;

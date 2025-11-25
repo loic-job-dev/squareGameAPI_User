@@ -4,7 +4,6 @@ import fr.campus_loic.square_games_users.controllers.dto.UserDto;
 import fr.campus_loic.square_games_users.domain.UserService;
 import fr.campus_loic.square_games_users.model.User;
 import fr.campus_loic.square_games_users.repositories.JpaUserDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
