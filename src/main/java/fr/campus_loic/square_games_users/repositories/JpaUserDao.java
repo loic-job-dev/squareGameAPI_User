@@ -56,10 +56,9 @@ public class JpaUserDao implements UserDao {
     public UserDto update(String id, UserDto userDto) {
         try {
             UserEntity userEntity = repository.findById(id).orElse(null);
-            User user = new User(userDto.name(), userDto.email());
-            userEntity.setName(user.getName());
-            userEntity.setEmail(user.getEmail());
-            userEntity.setPassword(user.getPassword());
+            userEntity.setName(userDto.name());
+            userEntity.setEmail(userDto.email());
+            userEntity.setPassword(userDto.password());
             repository.save(userEntity);
             UserDto newUserDto = new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), null);
             return newUserDto;
@@ -71,11 +70,7 @@ public class JpaUserDao implements UserDao {
 
     @Override
     public void delete(String userId) {
-        try {
-            repository.deleteById(userId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        repository.deleteById(userId);
     }
 }
 
