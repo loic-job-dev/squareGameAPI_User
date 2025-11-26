@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        return List.of();
+        return userDao.findAll();
     }
 
     @Override
     public UserDto getUser(String id) {
-        return null;
+        return userDao.findById(id);
     }
 
     @Override
@@ -35,7 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String id) {
+    public UserDto updateUser(String id, UserDto userDto) {
+        return userDao.update(id, userDto);
+    }
 
+    @Override
+    public void deleteUser(String id) {
+        userDao.delete(id);
     }
 }

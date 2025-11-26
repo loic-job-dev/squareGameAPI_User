@@ -1,10 +1,12 @@
 package fr.campus_loic.square_games_users.repositories;
 
+import fr.campus_loic.square_games_users.controllers.dto.UserDto;
 import fr.campus_loic.square_games_users.domain.UserDao;
 import fr.campus_loic.square_games_users.model.User;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,13 +20,26 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findAll() {
-        return List.of();
+    public List<UserDto> findAll() {
+        List<UserEntity> listEntyties = repository.findAll();
+        List<UserDto> listUsers = new ArrayList<>();
+        for  (UserEntity userEntity : listEntyties) {
+            UserDto user = new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), null);
+            listUsers.add(user);
+        }
+        return listUsers;
     }
 
     @Override
-    public User findById(String userId) {
-        return null;
+    public UserDto findById(String userId) {
+        UserEntity userEntity = repository.findById(userId).orElse(null);
+        try {
+            UserDto user = new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), null);
+            return user;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -38,13 +53,29 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-
+    public UserDto update(String id, UserDto userDto) {
+        try {
+            UserEntity userEntity = repository.findById(id).orElse(null);
+            User user = new User(userDto.name(), userDto.email());
+            userEntity.setName(user.getName());
+            userEntity.setEmail(user.getEmail());
+            userEntity.setPassword(user.getPassword());
+            repository.save(userEntity);
+            UserDto newUserDto = new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getEmail(), null);
+            return newUserDto;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void delete(String userId) {
-
+        try {
+            repository.deleteById(userId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
